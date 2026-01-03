@@ -1,55 +1,94 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+# Todo Full Stack Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### I. Professional Engineering
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+All backend development MUST use FastAPI with Clean Architecture patterns. All frontend development
+MUST use Next.js with modern UI/UX practices. Database operations MUST use PostgreSQL hosted on Neon.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+**Rationale**: Professional engineering ensures the application is maintainable, scalable, and follows
+industry best practices for web development.
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+### II. Reliability and Persistence
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+All data MUST be stored permanently in the PostgreSQL database. All API endpoints MUST be predictable
+and thoroughly tested. All user interactions MUST provide clear feedback.
 
-### [PRINCIPLE_6_NAME]
+**Rationale**: Users depend on their data being available and the application responding reliably.
+Permanent storage is the foundation of a todo application's value.
 
+### III. Spec Driven Development
 
-[PRINCIPLE__DESCRIPTION]
+All feature work MUST follow this sequence: Constitution → Specifications → Clarify → Analyze →
+Plan → Tasks → Implementation.
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+**Rationale**: Structured development reduces rework, ensures complete requirements, and creates
+traceable documentation for every change.
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+### IV. Clean Architecture
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+Code MUST be organized in modular, maintainable layers. Backend MUST separate models, services, and
+API concerns. Frontend MUST separate components, pages, and services.
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+**Rationale**: Clean architecture enables team collaboration, simplifies testing, and supports future
+feature additions without technical debt accumulation.
+
+### V. Testing and Quality
+
+All features MUST have corresponding tests. All code MUST pass quality gates before merge. Integration
+tests MUST verify end-to-end functionality.
+
+**Rationale**: Testing prevents regressions and provides confidence that the application works as
+expected across all user scenarios.
+
+### VI. Documentation
+
+All architectural decisions MUST be documented. All APIs MUST have documentation. All setup
+instructions MUST be maintained and accurate.
+
+**Rationale**: Documentation enables onboarding, supports maintenance, and preserves knowledge for
+future team members and stakeholders.
+
+## Phase-2 Mandatory Goals
+
+This phase MUST deliver the following capabilities:
+
+- **Neon PostgreSQL Database Integration**: Fully connected and operational database with proper
+  schema and migrations
+- **Full CRUD Todo System**: Create, Read, Update, and Delete operations for todo items
+- **Secure and Robust FastAPI Backend**: Production-ready API with proper error handling and
+  validation
+- **Modern Next.js Frontend**: Responsive, accessible user interface with intuitive interactions
+- **Clean Architecture**: Modular codebase following separation of concerns principles
+- **Complete Documentation**: Setup guides, API documentation, and architectural decisions
+
+## Deliverables
+
+This phase MUST produce the following tangible outputs:
+
+- **Running Full Stack Web Application**: Fully functional web application accessible to users
+- **Deployed Backend**: API deployed and operational in a production-like environment
+- **Deployed Frontend**: Frontend application deployed and accessible via web browser
+- **Database Schema**: PostgreSQL schema with proper indexes and constraints
+- **API Contracts**: Documented endpoints with request/response specifications
+- **Test Suite**: Automated tests covering core functionality
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+This constitution supersedes all other development practices. All team members MUST follow these
+principles for every change.
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+**Amendment Process**: Changes to this constitution require:
+1. Documentation of the proposed change
+2. Review and approval from project stakeholders
+3. Migration plan for existing work
+4. Update to all affected templates and documentation
+
+**Version Compliance**: All features MUST reference this constitution. All plans MUST verify
+conformance. All reviews MUST check for violations.
+
+**Quality Gates**: Every pull request MUST verify compliance with these principles. Complexity
+deviations MUST be justified and documented. Simpler alternatives MUST be considered first.
+
+**Version**: 1.0.0 | **Ratified**: 2025-12-31 | **Last Amended**: 2025-12-31

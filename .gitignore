@@ -1,30 +1,67 @@
-# Backend
+# Backend - Python
 backend/__pycache__/
 backend/.env
 backend/.venv/
+backend/venv/
 backend/.pytest_cache/
 backend/coverage/
+backend/htmlcov/
+backend/*.pyc
+backend/*.pyo
+backend/*.pyd
+backend/.Python
+backend/env/
+backend/eggs/
+backend/*.egg-info/
+backend/dist/
+backend/build/
+backend/*.egg
 
-# Frontend
+# Backend - Alembic
+backend/alembic/versions/*.pyc
+backend/alembic/*.pyc
+
+# Frontend - Node.js/Next.js
 frontend/.next/
 frontend/node_modules/
 frontend/.env.local
 frontend/.env.production.local
 frontend/dist/
 frontend/build/
+frontend/.out/
+frontend/coverage/
+
+# Package managers
+frontend/package-lock.json
+frontend/yarn.lock
+frontend/pnpm-lock.yaml
+
+# Testing
+frontend/jest.config.js
+frontend/jest.setup.js
+frontend/.nyc_output/
 
 # IDE
 .idea/
 .vscode/
 *.swp
 *.swo
+*.sublime-*
 
 # OS
 .DS_Store
 Thumbs.db
+desktop.ini
 
 # Logs
 *.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Misc
+*.local
+.temp/
+.tmp/

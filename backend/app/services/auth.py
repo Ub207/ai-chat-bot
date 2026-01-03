@@ -1,4 +1,5 @@
-from sqlalchemy.orm import Session
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy import select
 from app.models import User
 from app.schemas import UserCreate, UserResponse
 from app.utils.security import hash_password, verify_password
@@ -7,10 +8,11 @@ from fastapi import HTTPException, status
 
 class AuthService:
     @staticmethod
-    def register_user(db: Session, user_data: UserCreate) -> User:
+    async def register_user(db: AsyncSession, user_data: UserCreate) -> User:
         """Register a new user."""
         # Check if email already exists
-        existing_user = db.query(User).filter(User.email == user_data.email).first()
+        result = await db.execute(select(User).where(User.email == user_data.email))
+        existing_user = result.scalar_one_or_none()
         if existing_user:
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
@@ -18,7 +20,8 @@ class AuthService:
             )
 
         # Check if username already exists
-        existing_username = db.query(User).filter(User.username == user_data.username).first()
+        result = await db.execute(select(User).where(User.username == user_data.username))
+        existing_username = result.scalar_one_or_none()
         if existing_username:
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
@@ -33,15 +36,16 @@ class AuthService:
             hashed_password=hashed_password
         )
         db.add(new_user)
-        db.commit()
-        db.refresh(new_user)
+        await db.commit()
+        await db.refresh(new_user)
 
         return new_user
 
     @staticmethod
-    def authenticate_user(db: Session, email: str, password: str) -> User:
+    async def authenticate_user(db: AsyncSession, email: str, password: str) -> User:
         """Authenticate a user by email and password."""
-        user = db.query(User).filter(User.email == email).first()
+        result = await db.execute(select(User).where(User.email == email))
+        user = result.scalar_one_or_none()
         if not user:
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
@@ -63,9 +67,10 @@ class AuthService:
         return user
 
     @staticmethod
-    def get_user_by_id(db: Session, user_id: int) -> User:
+    async def get_user_by_id(db: AsyncSession, user_id: int) -> User:
         """Get user by ID."""
-        user = db.query(User).filter(User.id == user_id).first()
+        result = await db.execute(select(User).where(User.id == user_id))
+        user = result.scalar_one_or_none()
         if not user:
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,

@@ -9,10 +9,11 @@ from app.routers import auth, todos
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # Startup: Create tables
-    Base.metadata.create_all(bind=engine)
+    async with engine.begin() as conn:
+        await conn.run_sync(Base.metadata.create_all)
     yield
     # Shutdown: Cleanup if needed
-    pass
+    await engine.dispose()
 
 
 app = FastAPI(

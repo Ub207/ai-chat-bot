@@ -1,5 +1,5 @@
-from fastapi import APIRouter, Depends, HTTPException, status, Response
-from sqlalchemy.orm import Session
+from fastapi import APIRouter, Depends, HTTPException, status
+from sqlalchemy.ext.asyncio import AsyncSession
 from app.database import get_db
 from app.schemas import UserCreate, UserLogin, Token, UserResponse, Message
 from app.services import AuthService
@@ -7,20 +7,20 @@ from app.utils.security import create_access_token, create_refresh_token, decode
 from app.config import settings
 
 
-router = APIRouter(prefix="/api/auth", tags=["Authentication"])
+router = APIRouter(tags=["Authentication"])
 
 
 @router.post("/register", response_model=UserResponse, status_code=status.HTTP_201_CREATED)
-async def register(user_data: UserCreate, db: Session = Depends(get_db)):
+async def register(user_data: UserCreate, db: AsyncSession = Depends(get_db)):
     """Register a new user."""
-    user = AuthService.register_user(db, user_data)
+    user = await AuthService.register_user(db, user_data)
     return user
 
 
 @router.post("/login", response_model=Token)
-async def login(credentials: UserLogin, db: Session = Depends(get_db)):
+async def login(credentials: UserLogin, db: AsyncSession = Depends(get_db)):
     """Login and get access/refresh tokens."""
-    user = AuthService.authenticate_user(db, credentials.email, credentials.password)
+    user = await AuthService.authenticate_user(db, credentials.email, credentials.password)
 
     # Create tokens
     access_token = create_access_token(user.id)
@@ -35,7 +35,7 @@ async def login(credentials: UserLogin, db: Session = Depends(get_db)):
 
 
 @router.post("/refresh", response_model=Token)
-async def refresh_token(refresh_token: str, db: Session = Depends(get_db)):
+async def refresh_token(refresh_token: str, db: AsyncSession = Depends(get_db)):
     """Refresh access token using refresh token."""
     try:
         payload = decode_token(refresh_token)
@@ -52,7 +52,7 @@ async def refresh_token(refresh_token: str, db: Session = Depends(get_db)):
         )
 
     # Verify user still exists and is active
-    user = AuthService.get_user_by_id(db, user_id)
+    user = await AuthService.get_user_by_id(db, user_id)
 
     # Create new tokens
     new_access_token = create_access_token(user.id)

@@ -76,6 +76,25 @@ export const authApi = {
   logout: () => api.post('/api/auth/logout'),
 }
 
+// Helper functions for token management
+export const setAuthTokens = (accessToken: string, refreshToken: string) => {
+  localStorage.setItem('accessToken', accessToken)
+  localStorage.setItem('refreshToken', refreshToken)
+}
+
+export const clearAuthTokens = () => {
+  localStorage.removeItem('accessToken')
+  localStorage.removeItem('refreshToken')
+  localStorage.removeItem('user')
+}
+
+export const getAuthTokens = () => {
+  return {
+    accessToken: localStorage.getItem('accessToken'),
+    refreshToken: localStorage.getItem('refreshToken'),
+  }
+}
+
 // Todos API
 export const todosApi = {
   getAll: (params?: { skip?: number; limit?: number }) =>

@@ -1,7 +1,35 @@
 {
   "permissions": {
     "allow": [
-      "Bash(tree:*)"
+      "Bash(tree:*)",
+      "Bash(git fetch:*)",
+      "Bash(.specify/scripts/bash/create-new-feature.sh:*)",
+      "Bash(.specify/scripts/bash/create-phr.sh:*)",
+      "Bash(.specify/scripts/bash/check-prerequisites.sh:*)",
+      "Bash(npm install)",
+      "Bash(timeout 60 bash:*)",
+      "Bash(pip:*)",
+      "Bash(python -m venv:*)",
+      "Bash(venvScriptsactivate)",
+      "Bash(venv/Scripts/activate)",
+      "Bash(python:*)",
+      "Bash(curl:*)",
+      "Bash(netstat:*)",
+      "Bash(findstr:*)",
+      "Bash(taskkill /PID 10092 /F)",
+      "Bash(taskkill /PID 15876 /F)",
+      "Bash(taskkill /PID 3656 /F)",
+      "Bash(taskkill:*)",
+      "Bash(powershell -Command \"Stop-Process -Id 9356 -Force 2>&1\")",
+      "Bash(powershell -Command \"Get-Process -Id (Get-NetTCPConnection -LocalPort 3002 -ErrorAction SilentlyContinue).OwningProcess -ErrorAction SilentlyContinue | Stop-Process -Force 2>&1\")",
+      "Bash(./venv/Scripts/activate)",
+      "Bash(uvicorn:*)",
+      "Bash(npm run dev:*)",
+      "Bash(dir:*)",
+      "Bash(powershell -Command \"Stop-Process -Id 4208 -Force 2>&1\")",
+      "Bash(powershell -Command \"Stop-Process -Id 2176 -Force 2>&1\")",
+      "Bash(powershell -Command \"Get-Process -Id 15588 | Select-Object -ExpandProperty Path\")",
+      "Bash(git add:*)"
     ]
   }
 }
