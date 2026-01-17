@@ -1,0 +1,27 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/next",
+      "config": {
+        "buildCommand": "npm run build"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/"
+    }
+  ],
+  "env": {
+    "NEXT_PUBLIC_API_URL": "$NEXT_PUBLIC_API_URL",
+    "NEXT_PUBLIC_OPENAI_API_KEY": "$NEXT_PUBLIC_OPENAI_API_KEY",
+    "NEXT_PUBLIC_BETTER_AUTH_URL": "$NEXT_PUBLIC_BETTER_AUTH_URL",
+    "NEXT_PUBLIC_APP_ENV": "$NEXT_PUBLIC_APP_ENV",
+    "NEXT_PUBLIC_OPENAI_DOMAIN": "$NEXT_PUBLIC_OPENAI_DOMAIN",
+    "NEXT_PUBLIC_ENABLE_ANALYTICS": "$NEXT_PUBLIC_ENABLE_ANALYTICS",
+    "NEXT_PUBLIC_MAINTENANCE_MODE": "$NEXT_PUBLIC_MAINTENANCE_MODE"
+  }
+}

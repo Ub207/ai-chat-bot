@@ -1,0 +1,15 @@
+services:
+- type: web
+  name: todo-chatbot-backend
+  env: python
+  buildCommand: pip install -r requirements.txt
+  startCommand: cd backend && bash start.sh
+  envVars:
+  - key: PYTHON_VERSION
+    value: 3.12.3
+  - key: WEB_CONCURRENCY
+    value: 4
+  disk:
+    name: todo-db-data
+    mountPath: /var/lib/postgresql/data
+    sizeGB: 10
