@@ -1,0 +1,8 @@
+.venv/
+venv/
+win_venv/
+ai-chat-bot/
+*.db
+__pycache__/
+temp_git/
+

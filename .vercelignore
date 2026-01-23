@@ -1,0 +1,68 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.pytest_cache/
+.venv/
+.venv_old/
+venv/
+win_venv/
+vercel_deploy_venv/
+env/
+ENV/
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Git
+.git/
+.gitignore
+
+# Documentation
+docs/
+*.md
+!README.md
+
+# Tests
+tests/
+test_*.py
+*_test.py
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Frontend (if not needed for API)
+frontend/
+node_modules/
+
+# Spec and history
+specs/
+history/
+.specify/
+.spec-kit/
+.claude/
+.gemini/
+
+# Alembic migrations (use environment-specific migrations)
+alembic/
+
+# Other
+pip_temp/
+*.lnk
