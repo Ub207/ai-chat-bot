@@ -65,3 +65,10 @@ lerna-debug.log*
 *.local
 .temp/
 .tmp/
+
+# Additional ignores
+backend/todos.db
+backend/package-lock.json
+.claude/settings.local.json
+to-do-full-stack - Shortcut.lnk
+*.lnk

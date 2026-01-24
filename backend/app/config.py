@@ -1,6 +1,11 @@
 from pydantic_settings import BaseSettings
-from typing import List
+from typing import List, Union
 from functools import lru_cache
+from pathlib import Path
+
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
+ENV_FILE_PATH = BASE_DIR / "backend.env"
 
 
 class Settings(BaseSettings):
@@ -17,16 +22,20 @@ class Settings(BaseSettings):
     DEBUG: bool = True
 
     # CORS
-    CORS_ORIGINS: list = ["http://localhost:3000", "http://localhost:3001", "http://localhost:3002", "http://localhost:3003"]
+    CORS_ORIGINS: Union[List[str], str] = ["http://localhost:3000", "http://localhost:3001", "http://localhost:3002", "http://localhost:3003"]
 
     class Config:
-        env_file = ".env"
+        env_file = ENV_FILE_PATH
         case_sensitive = True
 
 
 @lru_cache()
 def get_settings() -> Settings:
-    return Settings()
+    settings = Settings()
+    # Handle comma-separated CORS origins from environment variable
+    if isinstance(settings.CORS_ORIGINS, str):
+        settings.CORS_ORIGINS = [origin.strip() for origin in settings.CORS_ORIGINS.split(',')]
+    return settings
 
 
 settings = get_settings()

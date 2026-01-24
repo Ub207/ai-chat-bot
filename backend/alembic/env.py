@@ -16,7 +16,14 @@ if config.config_file_name is not None:
 
 # add your model's MetaData object here
 # for 'autogenerate' support
-from app.models.todo import Base
+import sys
+import os
+
+sys.path.append(os.getcwd())
+
+# add your model's MetaData object here
+# for 'autogenerate' support
+from src.models.todo import Base
 target_metadata = Base.metadata
 
 # other values from the config, defined by the needs of env.py,

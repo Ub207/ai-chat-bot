@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from 'react';
 
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000/api";
+
 interface Todo {
   id: number;
   title: string;
@@ -13,20 +15,20 @@ export default function Home() {
   const [title, setTitle] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const API_URL = 'http://localhost:8000/api/v1/tasks';
-  const USER_ID = 1; // For demo purposes
-
   useEffect(() => {
     fetchTodos();
   }, []);
 
   async function fetchTodos() {
     try {
-      const res = await fetch(`${API_URL}?user_id=${USER_ID}`);
+      const res = await fetch(`${API_BASE}/todos`);
+      if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`);
+      }
       const data = await res.json();
-      setTodos(data.tasks || []);
+      setTodos(data.todos || []);
     } catch (e) {
-      console.log('Error fetching todos');
+      console.error('Error fetching todos:', e);
     }
   }
 
@@ -36,17 +38,20 @@ export default function Home() {
 
     setLoading(true);
     try {
-      const res = await fetch(API_URL, {
+      const res = await fetch(`${API_BASE}/todos`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ title, user_id: USER_ID, description: '' }),
+        body: JSON.stringify({ title }),
       });
+      if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`);
+      }
       if (res.ok) {
         setTitle('');
         fetchTodos();
       }
     } catch (e) {
-      console.log('Error adding todo');
+      console.error('Error adding todo:', e);
     }
     setLoading(false);
   }
@@ -54,23 +59,29 @@ export default function Home() {
   async function toggleTodo(id: number, currentStatus: string) {
     try {
       const newStatus = currentStatus === 'completed' ? 'pending' : 'completed';
-      await fetch(`${API_URL}/${id}/status?user_id=${USER_ID}`, {
+      const isCompleted = newStatus === 'completed';
+      const res = await fetch(`${API_BASE}/todos/${id}/toggle`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ new_status: newStatus }),
       });
+      if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`);
+      }
       fetchTodos();
     } catch (e) {
-      console.log('Error toggling todo');
+      console.error('Error toggling todo:', e);
     }
   }
 
   async function deleteTodo(id: number) {
     try {
-      await fetch(`${API_URL}/${id}?user_id=${USER_ID}`, { method: 'DELETE' });
+      const res = await fetch(`${API_BASE}/todos/${id}`, { method: 'DELETE' });
+      if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`);
+      }
       fetchTodos();
     } catch (e) {
-      console.log('Error deleting todo');
+      console.error('Error deleting todo:', e);
     }
   }
 

@@ -122,12 +122,12 @@ to-do-full-stack/
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| GET | `/api/v1/todos` | List all todos with stats |
-| POST | `/api/v1/todos` | Create new todo |
-| GET | `/api/v1/todos/{id}` | Get single todo |
-| PUT | `/api/v1/todos/{id}` | Update todo |
-| PATCH | `/api/v1/todos/{id}/status` | Toggle completion |
-| DELETE | `/api/v1/todos/{id}` | Delete todo |
+| GET | `/api/todos` | List all todos with stats |
+| POST | `/api/todos` | Create new todo |
+| GET | `/api/todos/{id}` | Get single todo |
+| PUT | `/api/todos/{id}` | Update todo |
+| PATCH | `/ap/todos/{id}/status` | Toggle completion |
+| DELETE | `/api/todos/{id}` | Delete todo |
 
 ### Health
 

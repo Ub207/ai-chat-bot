@@ -35,7 +35,7 @@ class TestTodoCreateEndpoint:
     async def test_create_todo_success(self, client: AsyncClient):
         """Test successful todo creation."""
         response = await client.post(
-            "/api/v1/todos",
+            "/api/todos",
             json={"title": "Test todo", "description": "Test description"},
         )
         assert response.status_code == 201
@@ -51,7 +51,7 @@ class TestTodoCreateEndpoint:
     async def test_create_todo_minimal(self, client: AsyncClient):
         """Test creating todo with minimal data."""
         response = await client.post(
-            "/api/v1/todos",
+            "/api/todos",
             json={"title": "Minimal todo"},
         )
         assert response.status_code == 201
@@ -63,7 +63,7 @@ class TestTodoCreateEndpoint:
     async def test_create_todo_empty_title_fails(self, client: AsyncClient):
         """Test that empty title returns 422."""
         response = await client.post(
-            "/api/v1/todos",
+            "/api/todos",
             json={"title": ""},
         )
         assert response.status_code == 422
@@ -73,7 +73,7 @@ class TestTodoCreateEndpoint:
         """Test creating todo with due date."""
         due = "2024-12-31T23:59:00"
         response = await client.post(
-            "/api/v1/todos",
+            "/api/todos",
             json={"title": "Due todo", "due_at": due},
         )
         assert response.status_code == 201
@@ -87,7 +87,7 @@ class TestTodoListEndpoint:
     @pytest.mark.asyncio
     async def test_list_todos_empty(self, client: AsyncClient):
         """Test listing todos when empty."""
-        response = await client.get("/api/v1/todos")
+        response = await client.get("/api/todos")
         assert response.status_code == 200
         data = response.json()
         assert data["todos"] == []
@@ -99,11 +99,11 @@ class TestTodoListEndpoint:
     async def test_list_todos_with_data(self, client: AsyncClient):
         """Test listing todos after creating some."""
         # Create todos
-        await client.post("/api/v1/todos", json={"title": "Todo 1"})
-        await client.post("/api/v1/todos", json={"title": "Todo 2"})
-        await client.post("/api/v1/todos", json={"title": "Todo 3"})
+        await client.post("/api/todos", json={"title": "Todo 1"})
+        await client.post("/api/todos", json={"title": "Todo 2"})
+        await client.post("/api/todos", json={"title": "Todo 3"})
 
-        response = await client.get("/api/v1/todos")
+        response = await client.get("/api/todos")
         assert response.status_code == 200
         data = response.json()
         assert len(data["todos"]) == 3
@@ -114,12 +114,12 @@ class TestTodoListEndpoint:
     @pytest.mark.asyncio
     async def test_list_todos_filter_completed(self, client: AsyncClient):
         """Test filtering todos by completion status."""
-        await client.post("/api/v1/todos", json={"title": "Todo 1"})
-        await client.post("/api/v1/todos", json={"title": "Todo 2"})
-        await client.patch("/api/v1/todos/1/status", json={"is_completed": True})
+        await client.post("/api/todos", json={"title": "Todo 1"})
+        await client.post("/api/todos", json={"title": "Todo 2"})
+        await client.patch("/api/todos/1/status", json={"is_completed": True})
 
         # Get pending
-        response = await client.get("/api/v1/todos?completed=false")
+        response = await client.get("/api/todos?completed=false")
         assert response.status_code == 200
         data = response.json()
         assert len(data["todos"]) == 1
@@ -133,12 +133,12 @@ class TestTodoGetEndpoint:
     async def test_get_todo_success(self, client: AsyncClient):
         """Test getting a specific todo."""
         create_resp = await client.post(
-            "/api/v1/todos",
+            "/api/todos",
             json={"title": "Test todo"},
         )
         todo_id = create_resp.json()["id"]
 
-        response = await client.get(f"/api/v1/todos/{todo_id}")
+        response = await client.get(f"/api/todos/{todo_id}")
         assert response.status_code == 200
         data = response.json()
         assert data["id"] == todo_id
@@ -147,7 +147,7 @@ class TestTodoGetEndpoint:
     @pytest.mark.asyncio
     async def test_get_todo_not_found(self, client: AsyncClient):
         """Test getting non-existent todo returns 404."""
-        response = await client.get("/api/v1/todos/999")
+        response = await client.get("/api/todos/999")
         assert response.status_code == 404
 
 
@@ -158,13 +158,13 @@ class TestTodoUpdateEndpoint:
     async def test_update_todo_success(self, client: AsyncClient):
         """Test updating a todo."""
         create_resp = await client.post(
-            "/api/v1/todos",
+            "/api/todos",
             json={"title": "Original title"},
         )
         todo_id = create_resp.json()["id"]
 
         response = await client.put(
-            f"/api/v1/todos/{todo_id}",
+            f"/api/todos/{todo_id}",
             json={"title": "Updated title", "description": "New description"},
         )
         assert response.status_code == 200
@@ -176,7 +176,7 @@ class TestTodoUpdateEndpoint:
     async def test_update_todo_not_found(self, client: AsyncClient):
         """Test updating non-existent todo returns 404."""
         response = await client.put(
-            "/api/v1/todos/999",
+            "/api/todos/999",
             json={"title": "Updated"},
         )
         assert response.status_code == 404
@@ -189,14 +189,14 @@ class TestTodoToggleEndpoint:
     async def test_toggle_complete_success(self, client: AsyncClient):
         """Test toggling todo completion status."""
         create_resp = await client.post(
-            "/api/v1/todos",
+            "/api/todos",
             json={"title": "Test todo"},
         )
         todo_id = create_resp.json()["id"]
 
         # Mark as complete
         response = await client.patch(
-            f"/api/v1/todos/{todo_id}/status",
+            f"/api/todos/{todo_id}/status",
             json={"is_completed": True},
         )
         assert response.status_code == 200
@@ -204,7 +204,7 @@ class TestTodoToggleEndpoint:
 
         # Mark as incomplete
         response = await client.patch(
-            f"/api/v1/todos/{todo_id}/status",
+            f"/api/todos/{todo_id}/status",
             json={"is_completed": False},
         )
         assert response.status_code == 200
@@ -214,7 +214,7 @@ class TestTodoToggleEndpoint:
     async def test_toggle_not_found(self, client: AsyncClient):
         """Test toggling non-existent todo returns 404."""
         response = await client.patch(
-            "/api/v1/todos/999/status",
+            "/api/todos/999/status",
             json={"is_completed": True},
         )
         assert response.status_code == 404
@@ -227,20 +227,20 @@ class TestTodoDeleteEndpoint:
     async def test_delete_todo_success(self, client: AsyncClient):
         """Test deleting a todo."""
         create_resp = await client.post(
-            "/api/v1/todos",
+            "/api/todos",
             json={"title": "To delete"},
         )
         todo_id = create_resp.json()["id"]
 
-        response = await client.delete(f"/api/v1/todos/{todo_id}")
+        response = await client.delete(f"/api/todos/{todo_id}")
         assert response.status_code == 204
 
         # Verify deletion
-        get_resp = await client.get(f"/api/v1/todos/{todo_id}")
+        get_resp = await client.get(f"/api/todos/{todo_id}")
         assert get_resp.status_code == 404
 
     @pytest.mark.asyncio
     async def test_delete_todo_not_found(self, client: AsyncClient):
         """Test deleting non-existent todo returns 404."""
-        response = await client.delete("/api/v1/todos/999")
+        response = await client.delete("/api/todos/999")
         assert response.status_code == 404

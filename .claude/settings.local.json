@@ -29,7 +29,30 @@
       "Bash(powershell -Command \"Stop-Process -Id 4208 -Force 2>&1\")",
       "Bash(powershell -Command \"Stop-Process -Id 2176 -Force 2>&1\")",
       "Bash(powershell -Command \"Get-Process -Id 15588 | Select-Object -ExpandProperty Path\")",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "mcp__github__create_repository",
+      "Bash(gh repo create:*)",
+      "Bash(powershell -Command \"Get-Process -Id (Get-NetTCPConnection -LocalPort 8000 -ErrorAction SilentlyContinue).OwningProcess -ErrorAction SilentlyContinue | Stop-Process -Force 2>&1\")",
+      "Bash(powershell -Command:*)",
+      "Bash(cat:*)",
+      "Bash(timeout 60 python:*)",
+      "Bash(.venvScriptsactivate)",
+      "Bash(source venv/bin/activate)",
+      "Bash(python3 -c \"import urllib.request; print(urllib.request.urlopen(''http://127.0.0.1:8000/health'').read().decode())\")",
+      "Bash(python -m venv venv)",
+      "Bash(pip install -r requirements.txt)",
+      "Bash(python3 -m venv venv)",
+      "Bash(alembic upgrade head)",
+      "Bash(npm run dev)",
+      "Bash(curl -s http://localhost:8000/health)",
+      "Bash(curl -s http://localhost:8000/)",
+      "Bash(git remote get-url origin)",
+      "Bash(git remote add origin https://github.com/Ub207/full-stack-todo-app.git)",
+      "Bash(git add .)",
+      "Bash(git add -A)",
+      "Bash(git reset venv/ \"to-do-full-stack - Shortcut.lnk\" backend/package-lock.json)"
     ]
   }
 }

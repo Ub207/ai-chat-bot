@@ -2,7 +2,7 @@
 from contextlib import asynccontextmanager
 from typing import AsyncGenerator
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 
 from src.core.config import settings
@@ -30,7 +30,7 @@ app = FastAPI(
     openapi_url="/openapi.json",
 )
 
-# CORS middleware
+# CORS Configuration using settings
 app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.CORS_ORIGINS,
@@ -51,7 +51,7 @@ app.include_router(todos.router, prefix=settings.API_V1_PREFIX)
 )
 async def health_check() -> dict:
     """Health check endpoint."""
-    return {"status": "healthy", "message": "Todo API is running"}
+    return {"status": "healthy", "service": "todo-api"}
 
 
 @app.get(

@@ -13,12 +13,12 @@ class Settings(BaseSettings):
     APP_HOST: str = "0.0.0.0"
     APP_PORT: int = 8000
     DEBUG: bool = True
-    API_V1_PREFIX: str = "/api/v1"
+    API_V1_PREFIX: str = "/api"
 
     # Database
     DATABASE_URL: str = Field(
-        default="postgresql+asyncpg://user:pass@localhost/todo_db",
-        description="PostgreSQL connection URL with asyncpg driver",
+        default="sqlite+aiosqlite:///todos.db",
+        description="SQLite connection URL with aiosqlite driver",
     )
 
     # CORS
