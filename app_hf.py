@@ -15,6 +15,10 @@ if project_root not in sys.path:
 if not os.getenv('APP_ENV'):
     os.environ['APP_ENV'] = 'production'
 
+# Also set HF_SPACE indicator for the config
+if 'HF_SPACE' not in os.environ:
+    os.environ['HF_SPACE'] = 'true'
+
 # Import and create the FastAPI app
 from backend.api import app
 
