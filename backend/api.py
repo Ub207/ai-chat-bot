@@ -380,4 +380,5 @@ app.include_router(health_router)
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="127.0.0.1", port=8000)
+    # Hugging Face Spaces uses port 7860 by default
+    uvicorn.run(app, host="0.0.0.0", port=int(os.environ.get("PORT", 7860)))

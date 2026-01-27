@@ -1,0 +1,8 @@
+title: AI Chat Bot Backend API
+emoji: 🤖
+colorFrom: blue
+colorTo: purple
+sdk: docker
+python_version: "3.11"
+app_file: app_hf.py
+pinned: false

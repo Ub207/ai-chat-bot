@@ -93,12 +93,10 @@ class Settings(BaseSettings):
         @validator('openai_api_key')
         def validate_openai_api_key(cls, v):
             if not v:
-                raise ValueError(
-                    "OPENAI_API_KEY environment variable is required. "
-                    "Please set it in your .env file. "
-                    "You can get one from https://platform.openai.com/api-keys"
-                )
-            if not v.startswith('sk-'):
+                # For Hugging Face Spaces, we allow empty API key as fallback
+                # The application should work without OpenAI for core functionality
+                return v
+            if v and not v.startswith('sk-'):
                 raise ValueError(
                     "OPENAI_API_KEY should start with 'sk-' prefix."
                 )
@@ -167,12 +165,10 @@ class Settings(BaseSettings):
         @classmethod
         def validate_openai_api_key(cls, v):
             if not v:
-                raise ValueError(
-                    "OPENAI_API_KEY environment variable is required. "
-                    "Please set it in your .env file. "
-                    "You can get one from https://platform.openai.com/api-keys"
-                )
-            if not v.startswith('sk-') and not v.startswith('sk-test-placeholder'):
+                # For Hugging Face Spaces, we allow empty API key as fallback
+                # The application should work without OpenAI for core functionality
+                return v
+            if v and not v.startswith('sk-') and not v.startswith('sk-test-placeholder'):
                 # Allow the placeholder key for development
                 raise ValueError(
                     "OPENAI_API_KEY should start with 'sk-' prefix."

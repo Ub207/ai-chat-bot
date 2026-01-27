@@ -16,6 +16,19 @@ logger = logging.getLogger(__name__)
 # Use the database URL from settings instead of directly from environment
 DATABASE_URL = settings.database_url
 
+# For Hugging Face Spaces, ensure SQLite database is stored in a writable location
+if DATABASE_URL.startswith("sqlite:///"):
+    # Convert relative path to absolute path in a writable location
+    if DATABASE_URL.startswith("sqlite:///./"):
+        # For Hugging Face Spaces, store in a location that's writable
+        DATABASE_URL = DATABASE_URL.replace("sqlite:///./", "sqlite:////tmp/")
+    elif DATABASE_URL.startswith("sqlite:///"):
+        # Already an absolute path, keep as is
+        pass
+    else:
+        # Handle other cases
+        DATABASE_URL = DATABASE_URL.replace("sqlite:///", "sqlite:////tmp/")
+
 # Validate that DATABASE_URL is set
 if not DATABASE_URL:
     logger.error("DATABASE_URL environment variable is not set. Please configure your database connection.")
