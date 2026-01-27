@@ -9,19 +9,11 @@ project_root = os.path.dirname(os.path.abspath(__file__))
 if project_root not in sys.path:
     sys.path.insert(0, project_root)
 
-# Set default environment variables for Hugging Face Spaces deployment
-default_vars = {
-    'APP_ENV': 'production',
-    'DATABASE_URL': 'sqlite:////tmp/todo_chatbot.db',  # Use /tmp for Hugging Face Spaces
-    'JWT_SECRET_KEY': 'fallback-jwt-secret-key-for-hf-spaces-deployment-32chars',
-    'OPENAI_API_KEY': os.getenv('OPENAI_API_KEY', ''),  # Use existing if available
-    'BETTER_AUTH_SECRET': 'fallback-better-auth-secret-for-hf-spaces-32chars',
-    'CSRF_SECRET_KEY': 'fallback-csrf-secret-for-hf-spaces-32chars',
-}
-
-for key, value in default_vars.items():
-    if not os.getenv(key):
-        os.environ[key] = value
+# For Hugging Face Spaces, we rely on the config fallback mechanism instead of setting defaults here
+# This allows the Settings validation to fail and trigger the fallback mechanism
+# Only set the minimal APP_ENV to indicate production mode
+if not os.getenv('APP_ENV'):
+    os.environ['APP_ENV'] = 'production'
 
 # Import and create the FastAPI app
 from backend.api import app
