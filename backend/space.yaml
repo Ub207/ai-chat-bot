@@ -1,0 +1,10 @@
+# Hugging Face Space configuration
+api_version: 0.0.1
+sdk: docker
+secrets:
+  - DATABASE_URL
+  - SECRET_KEY
+env:
+  - DATABASE_URL=sqlite+aiosqlite:///todos.db
+  - SECRET_KEY=your-secret-key-here
+  - CORS_ORIGINS=http://localhost:3000,http://127.0.0.1:3000,https://ubaid-ai-to-do-full-stack.hf.space,https://full-stack-todo-app-wemu.vercel.app

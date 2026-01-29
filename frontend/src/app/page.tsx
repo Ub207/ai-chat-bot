@@ -14,6 +14,7 @@ export default function Home() {
   const [todos, setTodos] = useState<Todo[]>([]);
   const [title, setTitle] = useState('');
   const [loading, setLoading] = useState(false);
+  const [apiConnected, setApiConnected] = useState(true);
 
   useEffect(() => {
     fetchTodos();
@@ -27,8 +28,12 @@ export default function Home() {
       }
       const data = await res.json();
       setTodos(data.todos || []);
+      setApiConnected(true);
     } catch (e) {
       console.error('Error fetching todos:', e);
+      setApiConnected(false);
+      // Fallback to empty array if API is not available
+      setTodos([]);
     }
   }
 
@@ -52,6 +57,7 @@ export default function Home() {
       }
     } catch (e) {
       console.error('Error adding todo:', e);
+      alert('Failed to add todo. Backend API might not be connected.');
     }
     setLoading(false);
   }
@@ -60,9 +66,10 @@ export default function Home() {
     try {
       const newStatus = currentStatus === 'completed' ? 'pending' : 'completed';
       const isCompleted = newStatus === 'completed';
-      const res = await fetch(`${API_BASE}/todos/${id}/toggle`, {
+      const res = await fetch(`${API_BASE}/todos/${id}/status`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ is_completed: isCompleted }),
       });
       if (!res.ok) {
         throw new Error(`HTTP error! status: ${res.status}`);
@@ -70,6 +77,7 @@ export default function Home() {
       fetchTodos();
     } catch (e) {
       console.error('Error toggling todo:', e);
+      alert('Failed to toggle todo. Backend API might not be connected.');
     }
   }
 
@@ -82,6 +90,7 @@ export default function Home() {
       fetchTodos();
     } catch (e) {
       console.error('Error deleting todo:', e);
+      alert('Failed to delete todo. Backend API might not be connected.');
     }
   }
 
@@ -103,6 +112,19 @@ export default function Home() {
           Stay organized, get things done
         </p>
 
+        {!apiConnected && (
+          <div style={{
+            backgroundColor: '#fef2f2',
+            padding: '12px',
+            borderRadius: '8px',
+            marginBottom: '16px',
+            border: '1px solid #fecaca',
+            color: '#dc2626'
+          }}>
+            ⚠️ Backend API is not connected. Please set up the NEXT_PUBLIC_API_URL environment variable in Vercel.
+          </div>
+        )}
+
         {/* Add Todo */}
         <div style={{ backgroundColor: 'white', padding: '20px', borderRadius: '12px', marginBottom: '16px', boxShadow: '0 2px 8px rgba(0,0,0,0.1)' }}>
           <h2 style={{ fontSize: '18px', fontWeight: '600', marginBottom: '12px' }}>Add New Todo</h2>
@@ -121,19 +143,20 @@ export default function Home() {
                 marginBottom: '8px',
                 boxSizing: 'border-box'
               }}
+              disabled={!apiConnected}
             />
             <button
               type="submit"
-              disabled={!title.trim() || loading}
+              disabled={!title.trim() || loading || !apiConnected}
               style={{
                 width: '100%',
                 padding: '12px',
-                backgroundColor: title.trim() && !loading ? '#0284c7' : '#ccc',
+                backgroundColor: title.trim() && !loading && apiConnected ? '#0284c7' : '#ccc',
                 color: 'white',
                 border: 'none',
                 borderRadius: '8px',
                 fontSize: '16px',
-                cursor: title.trim() && !loading ? 'pointer' : 'not-allowed'
+                cursor: title.trim() && !loading && apiConnected ? 'pointer' : 'not-allowed'
               }}
             >
               {loading ? 'Adding...' : 'Add Todo'}
@@ -157,7 +180,7 @@ export default function Home() {
 
           {todos.length === 0 ? (
             <p style={{ color: '#999', textAlign: 'center', padding: '20px' }}>
-              No todos yet. Add one above!
+              {apiConnected ? 'No todos yet. Add one above!' : 'Connect to API to load todos.'}
             </p>
           ) : (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
@@ -178,6 +201,7 @@ export default function Home() {
                     checked={todo.status === 'completed'}
                     onChange={() => toggleTodo(todo.id, todo.status)}
                     style={{ width: '20px', height: '20px' }}
+                    disabled={!apiConnected}
                   />
                   <span style={{
                     flex: 1,
@@ -196,6 +220,7 @@ export default function Home() {
                       borderRadius: '4px',
                       cursor: 'pointer'
                     }}
+                    disabled={!apiConnected}
                   >
                     Delete
                   </button>

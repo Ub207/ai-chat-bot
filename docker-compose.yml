@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  backend:
+    build: .
+    ports:
+      - "7860:7860"
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://todo_user:todo_pass@db:5432/todo_db
+      - SECRET_KEY=your-super-secret-and-long-random-string-here
+      - CORS_ORIGINS=http://localhost:3000,http://localhost:3001
+      - DEBUG=false
+    depends_on:
+      - db
+    volumes:
+      - ./app:/app/app  # Optional: for development hot-reload
+    restart: unless-stopped
+
+  db:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_DB: todo_db
+      POSTGRES_USER: todo_user
+      POSTGRES_PASSWORD: todo_pass
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
