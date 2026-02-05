@@ -1,9 +1,9 @@
 {
   "version": 2,
-  "buildCommand": "npm --prefix frontend run build",
+  "buildCommand": "cd frontend && npm run build",
   "outputDirectory": "frontend/.next",
-  "devCommand": "npm --prefix frontend run dev",
-  "installCommand": "npm install --prefix frontend",
+  "devCommand": "cd frontend && npm run dev",
+  "installCommand": "cd frontend && npm install",
   "env": {
     "NEXT_PUBLIC_API_URL": "https://ubaid-ai-bot-interfaces.hf.space",
     "NEXT_PUBLIC_APP_ENV": "production",
