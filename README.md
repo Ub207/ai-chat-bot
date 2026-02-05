@@ -1,23 +1,42 @@
-# Todo App Chatbot - Phase III
+---
+title: AI Chat Bot Backend API
+emoji: 🤖
+colorFrom: blue
+colorTo: purple
+sdk: docker
+python_version: "3.11"
+app_file: app_hf.py
+pinned: false
+---
 
-This is the third phase of the Todo App chatbot project, implementing a stateless, intelligent todo management system using OpenAI Agents SDK and MCP (Model Context Protocol).
+# AI Chat Bot Backend - Hugging Face Space
 
-## Phase-3 Todo Agent Implementation
+This is the backend API for the AI Chat Bot application, deployed as a Hugging Face Space.
 
-The project now includes a Phase-3 Todo Agent that executes real actions using task API functions. Key features include:
+## Features
+- FastAPI-based REST API
+- SQLite database for persistence
+- JWT-based authentication
+- Todo management functionality
+- AI-powered chat capabilities
 
-- **Command Parsing**: Supports commands like `add task <title>`, `show all tasks`, `update task #<id> <status>`, `delete task #<id>`, and `review my progress today`
-- **Real Action Execution**: Integrates with actual task API functions (`create_task`, `get_user_tasks`, `update_task_status`, `delete_task`)
-- **Error Handling**: Validates inputs and handles edge cases appropriately
-- **JSON Responses**: Returns structured responses with both user-friendly text and tool calls
-- **Dynamic User IDs**: Supports different users instead of hardcoded demo_user
-- **Regex-Based Parsing**: Robust command parsing with flexible patterns
+## Configuration
+- Runs on port 7860 (Hugging Face default)
+- Uses SQLite database stored as `todo_chatbot.db`
+- Environment variables are configured automatically for Hugging Face Spaces
 
-Files:
-- `todo_agent.py`: Main implementation of the Phase-3 Todo Agent
-- `test_todo_agent.py`: Test script demonstrating all functionality
+## Endpoints
+- `GET /` - Health check and status
+- `GET /health` - Health check endpoint
+- `/api/v1/` - Main API routes
+- `/docs` - Interactive API documentation
+- `/redoc` - Alternative API documentation
 
-## Project Overview
+## Deployment
+This Space is automatically deployed from the GitHub repository. When changes are pushed to the main branch, Hugging Face Spaces will rebuild and redeploy the application.
+
+## Environment Variables
+The application is configured to work with Hugging Face Spaces environment and will use fallback values for required configuration when environment variables are not set.
 
 Phase III introduces a sophisticated AI-powered chatbot that enables users to manage their todo lists through natural language conversations. The system features a stateless architecture that retrieves all conversation context from the database, ensuring horizontal scalability and resilience. Built with modern technologies including FastAPI, Neon PostgreSQL, and OpenAI's ecosystem, this solution delivers seamless task management experiences through conversational AI.
 
