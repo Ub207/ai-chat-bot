@@ -9,7 +9,6 @@
 // Define the expected shape of our configuration
 interface AppConfig {
   apiUrl: string;
-  openaiApiKey: string;
   betterAuthUrl: string;
   appEnv: string;
   openaiDomain: string;
@@ -72,7 +71,6 @@ function loadConfig(): AppConfig {
   try {
     // Validate required string values
     const apiUrl = validateUrl(process.env.NEXT_PUBLIC_API_URL, 'API URL');
-    const openaiApiKey = validateRequired(process.env.NEXT_PUBLIC_OPENAI_API_KEY, 'OpenAI API Key');
     const betterAuthUrl = validateUrl(process.env.NEXT_PUBLIC_BETTER_AUTH_URL, 'Better Auth URL');
     const appEnv = validateRequired(process.env.NEXT_PUBLIC_APP_ENV, 'App Environment');
     const openaiDomain = validateUrl(process.env.NEXT_PUBLIC_OPENAI_DOMAIN, 'OpenAI Domain');
@@ -80,14 +78,6 @@ function loadConfig(): AppConfig {
     // Validate optional boolean values
     const enableAnalytics = validateBoolean(process.env.NEXT_PUBLIC_ENABLE_ANALYTICS, false);
     const maintenanceMode = validateBoolean(process.env.NEXT_PUBLIC_MAINTENANCE_MODE, false);
-
-    // Additional validation for OpenAI API key format
-    if (!openaiApiKey.startsWith('sk-')) {
-      throw new Error(
-        'NEXT_PUBLIC_OPENAI_API_KEY should start with "sk-" prefix. ' +
-        'Please verify your OpenAI API key format.'
-      );
-    }
 
     // Additional validation for app environment
     const validEnvironments = ['development', 'production', 'staging', 'test'];
@@ -100,7 +90,6 @@ function loadConfig(): AppConfig {
 
     return {
       apiUrl,
-      openaiApiKey,
       betterAuthUrl,
       appEnv,
       openaiDomain,
@@ -149,14 +138,6 @@ function getApiUrl(): string {
 /**
  * Gets the OpenAI API key.
  * @returns The OpenAI API key
- */
-function getOpenAiApiKey(): string {
-  return config.openaiApiKey;
-}
-
-/**
- * Gets the Better Auth URL.
- * @returns The Better Auth URL
  */
 function getBetterAuthUrl(): string {
   return config.betterAuthUrl;
@@ -207,7 +188,6 @@ export {
   config,
   validateConfig,
   getApiUrl,
-  getOpenAiApiKey,
   getBetterAuthUrl,
   getOpenAiDomain,
   isDevelopment,
