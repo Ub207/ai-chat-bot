@@ -49,7 +49,6 @@ temp/
 *.tmp
 
 # Frontend (if not needed for API)
-frontend/
 node_modules/
 
 # Spec and history
