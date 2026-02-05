@@ -25,7 +25,13 @@
       "Bash(git remote add origin https://github.com/Ub207/ai-chat-bot.git)",
       "Bash(git push -u origin master)",
       "Bash(git config --get-regexp \"credential.*\")",
-      "Bash(git config --global credential.helper store)"
+      "Bash(git config --global credential.helper store)",
+      "Bash(git add README.md space.yaml)",
+      "Bash(git pull origin main --allow-unrelated-histories)",
+      "Bash(git config:*)",
+      "Bash(git pull:*)",
+      "Bash(git stash:*)",
+      "Bash(git push:*)"
     ]
   }
 }
