@@ -1,7 +1,8 @@
+import { getApiUrl } from './config';
 import { Conversation, Message as MessageInterface, ChatResponse, ChatRequest } from '@/types';
 
 // API client for chat functionality
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000';
+const API_BASE_URL = getApiUrl();
 
 // Get JWT token from wherever it's stored (e.g., localStorage, cookies)
 const getAuthToken = (): string | null => {
