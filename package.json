@@ -2,8 +2,10 @@
   "name": "todo-app-chatbot-phase-iii",
   "version": "0.1.0",
   "scripts": {
-    "build": "echo 'Build step not needed for Python app'",
-    "start": "uvicorn api.app:app --host 0.0.0.0 --port $PORT"
+    "dev": "npm --prefix frontend run dev",
+    "build": "npm --prefix frontend run build",
+    "start": "npm --prefix frontend run start",
+    "lint": "npm --prefix frontend run lint"
   },
   "dependencies": {},
   "devDependencies": {}
