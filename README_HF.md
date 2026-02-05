@@ -1,28 +1,49 @@
+---
+title: AI Chat Bot Backend API
+emoji: 🤖
+colorFrom: blue
+colorTo: purple
+sdk: docker
+sdk_version: "4.0.0"
+python_version: "3.11"
+app_file: app_hf.py
+pinned: false
+---
+
 # AI Chat Bot Backend - Hugging Face Space
 
-This is the backend API for the AI Chat Bot application, deployed as a Hugging Face Space.
+FastAPI-based backend for the AI Chat Bot application, packaged for Hugging Face Spaces.
 
 ## Features
-- FastAPI-based REST API
-- SQLite database for persistence
-- JWT-based authentication
-- Todo management functionality
-- AI-powered chat capabilities
+- FastAPI REST API with SQLite persistence
+- JWT authentication (demo fallbacks available)
+- Todo management + conversation history
+- OpenAPI docs at `/docs` and `/redoc`
 
-## Configuration
-- Runs on port 7860 (Hugging Face default)
-- Uses SQLite database stored as `todo_chatbot.db`
-- Environment variables are configured automatically for Hugging Face Spaces
+## Runtime / Config
+- Port: **7860** (HF default)
+- DB: `sqlite:////tmp/todo.db` fallback
+- Env vars (set in Space Settings → Variables & secrets):
+  - `JWT_SECRET_KEY` (>=32 chars)
+  - `BETTER_AUTH_SECRET` (>=32 chars)
+  - `CSRF_SECRET_KEY` (>=32 chars)
+  - `OPENAI_API_KEY` (optional)
+  - `DATABASE_URL` (optional; defaults to SQLite)
 
-## Endpoints
-- `GET /` - Health check and status
-- `GET /health` - Health check endpoint
-- `/api/v1/` - Main API routes
-- `/docs` - Interactive API documentation
-- `/redoc` - Alternative API documentation
+## Key Endpoints
+- `GET /` — status
+- `GET /health` — health
+- `POST /conversations/` — create conversation
+- `GET /conversations` — list conversations
+- `GET /conversations/{id}/messages` — list messages
+- `POST /conversations/{id}/messages` — chat
+- `POST /tasks/` — create task
+- `GET /tasks/{user_id}` — list tasks
+- `PUT /tasks/{id}/complete` — complete task
+- `DELETE /tasks/{id}` — delete task
 
-## Deployment
-This Space is automatically deployed from the GitHub repository. When changes are pushed to the main branch, Hugging Face Spaces will rebuild and redeploy the application.
-
-## Environment Variables
-The application is configured to work with Hugging Face Spaces environment and will use fallback values for required configuration when environment variables are not set.
+## Deploy Steps (summary)
+1) Clone Space repo and copy: `app_hf.py`, `Dockerfile`, `requirements_hf.txt`, `space.yaml`, `.dockerignore`, `backend/`, and this `README_HF.md` (rename to `README.md` in the Space repo).
+2) `git add . && git commit -m "Deploy backend" && git push`
+3) Set env vars (recommended) in Space Settings.
+4) Wait for build, then test: `https://ubaid-ai-bot.hf.space/health`
