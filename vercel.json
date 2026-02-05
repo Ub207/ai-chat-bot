@@ -1,26 +1,15 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "api/main.py",
-      "use": "@vercel/python",
-      "config": {
-        "runtime": "python3.11"
-      }
-    }
-  ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "api/main.py"
-    }
-  ],
+  "buildCommand": "npm --prefix frontend run build",
+  "outputDirectory": "frontend/.next",
+  "devCommand": "npm --prefix frontend run dev",
+  "installCommand": "npm install --prefix frontend",
   "env": {
-    "APP_ENV": "production",
-    "DATABASE_URL": "sqlite:///./todo_chatbot.db",
-    "JWT_SECRET_KEY": "$JWT_SECRET_KEY",
-    "OPENAI_API_KEY": "$OPENAI_API_KEY",
-    "BETTER_AUTH_SECRET": "$BETTER_AUTH_SECRET",
-    "CSRF_SECRET_KEY": "$CSRF_SECRET_KEY"
+    "NEXT_PUBLIC_API_URL": "https://ubaid-ai-bot.hf.space",
+    "NEXT_PUBLIC_APP_ENV": "production",
+    "NEXT_PUBLIC_BETTER_AUTH_URL": "https://ubaid-ai-bot.vercel.app",
+    "NEXT_PUBLIC_OPENAI_DOMAIN": "https://api.openai.com",
+    "NEXT_PUBLIC_ENABLE_ANALYTICS": "false",
+    "NEXT_PUBLIC_MAINTENANCE_MODE": "false"
   }
 }

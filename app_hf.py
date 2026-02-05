@@ -54,7 +54,7 @@ if __name__ == "__main__":
     import uvicorn
     # Hugging Face Spaces uses port 7860 by default
     uvicorn.run(
-        "app_hf:app",
+        app,
         host="0.0.0.0",
         port=int(os.environ.get("PORT", 7860)),
         log_level="info"

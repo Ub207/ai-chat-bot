@@ -236,7 +236,7 @@ def load_settings():
         print(f"Config validation failed: {e}. Loading Hugging Face Spaces fallbacks...")
 
         # Set safe demo defaults for Hugging Face Spaces (all secrets must be >= 32 chars for validation)
-        os.environ.setdefault("DATABASE_URL", "sqlite:////tmp/todo.db")
+        os.environ.setdefault("DATABASE_URL", "sqlite:///./todo_chatbot.db")
         os.environ.setdefault("JWT_SECRET_KEY", "hf-demo-jwt-secret-key-for-hackathon-phase3-32chars")
         os.environ.setdefault("BETTER_AUTH_SECRET", "hf-demo-better-auth-secret-key-for-hackathon-phase3-32chars")
         os.environ.setdefault("CSRF_SECRET_KEY", "hf-demo-csrf-secret-key-for-hackathon-phase3-32chars")

@@ -1,0 +1,53 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+.venv/
+win_venv/
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Git
+.git/
+.gitignore
+
+# Node (if any)
+node_modules/
+npm-debug.log
+
+# Logs
+*.log
+
+# Frontend (not needed in backend)
+frontend/
+
+# Other
+*.md
+!README.md
+temp_git/
+patches/
+vercel_deploy_venv/
+ai-chat-bot/

@@ -14,8 +14,9 @@ RUN pip install --no-cache-dir -r requirements_hf.txt
 # Copy the rest of the application
 COPY . .
 
-# Ensure /tmp is available for database
-RUN mkdir -p /tmp
+# Ensure the database file is available and writable
+COPY ./backend/todo_chatbot.db /app/backend/todo_chatbot.db
+RUN chmod 666 /app/backend/todo_chatbot.db
 
 # Expose the port Hugging Face Spaces uses
 EXPOSE 7860
