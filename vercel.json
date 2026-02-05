@@ -5,7 +5,7 @@
   "devCommand": "npm --prefix frontend run dev",
   "installCommand": "npm install --prefix frontend",
   "env": {
-    "NEXT_PUBLIC_API_URL": "https://ubaid-ai-bot-interfaces.hf.space",
+    "NEXT_PUBLIC_API_URL": "https://ubaid-ai-bot.hf.space",
     "NEXT_PUBLIC_APP_ENV": "production",
     "NEXT_PUBLIC_BETTER_AUTH_URL": "https://ubaid-ai-bot.vercel.app",
     "NEXT_PUBLIC_OPENAI_DOMAIN": "https://api.openai.com",
