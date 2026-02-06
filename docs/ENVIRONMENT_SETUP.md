@@ -44,7 +44,7 @@ cp .env.example .env
    - Copy the connection string in the format: `postgresql://username:password@ep-xxx.us-east-1.aws.neon.tech/dbname?sslmode=require`
    - Replace the `DATABASE_URL` in your `.env` file with this connection string
 
-### Step 4: Configure OpenAI API Key
+### Step 4: Configure OpenAI 
 
 1. **Get API Key**:
    - Go to [OpenAI Platform](https://platform.openai.com/api-keys)
@@ -108,7 +108,7 @@ cp .env.local.example .env.local
    - For development: `NEXT_PUBLIC_API_URL=http://localhost:8000`
    - For production: `NEXT_PUBLIC_API_URL=https://yourdomain.com`
 
-### Step 4: Configure OpenAI API Key
+### Step 4: Configure OpenAI
 
 1. **Use Same Key as Backend**:
    - Use the same OpenAI API key you obtained for the backend

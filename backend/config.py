@@ -311,9 +311,6 @@ def get_database_url() -> str:
     return settings.database_url
 
 
-def get_openai_api_key() -> str:
-    """Get the OpenAI API key from settings."""
-    return settings.openai_api_key
 
 
 def get_jwt_secret_key() -> str:
