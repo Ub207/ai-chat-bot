@@ -1,5 +1,4 @@
 import './globals.css';
-import { AuthProvider } from '@/lib/auth-context';
 
 export const metadata = {
   title: 'Todo App Chatbot',
@@ -9,9 +8,7 @@ export const metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <AuthProvider>
-        <body className="antialiased">{children}</body>
-      </AuthProvider>
+      <body className="antialiased">{children}</body>
     </html>
   );
 }

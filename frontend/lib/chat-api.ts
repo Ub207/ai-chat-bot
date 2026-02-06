@@ -4,27 +4,11 @@ import { Conversation, Message as MessageInterface, ChatResponse, ChatRequest } 
 // API client for chat functionality
 const API_BASE_URL = getApiUrl();
 
-// Get JWT token from wherever it's stored (e.g., localStorage, cookies)
-const getAuthToken = (): string | null => {
-  if (typeof window !== 'undefined') {
-    // In browser environment
-    return localStorage.getItem('auth_token');
-  }
-  return null;
-};
-
-// Set up default headers with authentication
+// Set up default headers (no authentication needed for Phase-3)
 const getHeaders = (): HeadersInit => {
-  const headers: HeadersInit = {
+  return {
     'Content-Type': 'application/json',
   };
-
-  const token = getAuthToken();
-  if (token) {
-    headers['Authorization'] = `Bearer ${token}`;
-  }
-
-  return headers;
 };
 
 // Send a message to the chat API
@@ -48,7 +32,14 @@ export const sendMessage = async (
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
-      throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
+      let errorMessage = errorData.message || `HTTP error! status: ${response.status}`;
+
+      // Sanitize error message to prevent displaying backend API key prompts
+      if (errorMessage.toLowerCase().includes('api key')) {
+        errorMessage = 'An unexpected error occurred. Please try again or contact support.';
+      }
+
+      throw new Error(errorMessage);
     }
 
     const data: ChatResponse = await response.json();
@@ -69,7 +60,14 @@ export const getConversations = async (): Promise<Conversation[]> => {
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
-      throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
+      let errorMessage = errorData.message || `HTTP error! status: ${response.status}`;
+
+      // Sanitize error message to prevent displaying backend API key prompts
+      if (errorMessage.toLowerCase().includes('api key')) {
+        errorMessage = 'An unexpected error occurred. Please try again or contact support.';
+      }
+
+      throw new Error(errorMessage);
     }
 
     const data: Conversation[] = await response.json();
@@ -91,7 +89,14 @@ export const createConversation = async (): Promise<Conversation> => {
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
-      throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
+      let errorMessage = errorData.message || `HTTP error! status: ${response.status}`;
+
+      // Sanitize error message to prevent displaying backend API key prompts
+      if (errorMessage.toLowerCase().includes('api key')) {
+        errorMessage = 'An unexpected error occurred. Please try again or contact support.';
+      }
+
+      throw new Error(errorMessage);
     }
 
     const data: Conversation = await response.json();
@@ -112,7 +117,14 @@ export const getConversationMessages = async (conversation_id: number): Promise<
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
-      throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
+      let errorMessage = errorData.message || `HTTP error! status: ${response.status}`;
+
+      // Sanitize error message to prevent displaying backend API key prompts
+      if (errorMessage.toLowerCase().includes('api key')) {
+        errorMessage = 'An unexpected error occurred. Please try again or contact support.';
+      }
+
+      throw new Error(errorMessage);
     }
 
     const data: MessageInterface[] = await response.json();
